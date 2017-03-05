@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,10 +37,23 @@ public class CoinChangeTest {
         assertThat(changeFor(total)).have(new Condition<>(validCoins::contains, "be one of " + validCoins));
     }
 
+    @Property
+    public void never_have_more_than_a_single_one_penny_coin(
+        @InRange(minInt = 1, maxInt = 600) int total
+    ) {
+        long numberOfOnes = changeFor(total).stream()
+            .filter(Predicate.isEqual(1))
+            .count();
+        assertThat(numberOfOnes).isLessThanOrEqualTo(1);
+    }
+
     private List<Integer> changeFor(int total) {
-        return Stream
+        Stream<Integer> ones = Stream
             .generate(() -> 1)
-            .limit(total)
-            .collect(Collectors.toList());
+            .limit(total % 2);
+        Stream<Integer> twos = Stream
+            .generate(() -> 2)
+            .limit(total / 2);
+        return Stream.concat(ones, twos).collect(Collectors.toList());
     }
 }
