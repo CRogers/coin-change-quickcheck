@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class CoinChanger {
     private static final List<Integer> validCoins = ImmutableList.of(
-        10, 5, 2, 1
+        100, 50, 20, 10, 5, 2, 1
     );
 
     public static List<Integer> changeFor(int total) {
