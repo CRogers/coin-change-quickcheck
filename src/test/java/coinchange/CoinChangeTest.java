@@ -1,6 +1,5 @@
 package coinchange;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.generator.InRange;
@@ -10,6 +9,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +37,9 @@ public class CoinChangeTest {
     }
 
     private List<Integer> changeFor(int total) {
-        return ImmutableList.of(total);
+        return Stream
+            .generate(() -> 1)
+            .limit(total)
+            .collect(Collectors.toList());
     }
 }
