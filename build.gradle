@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '21.0'
+
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.6.2'
+
+    testCompile group: 'com.pholser', name: 'junit-quickcheck-generators', version: '0.7'
+}
